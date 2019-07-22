@@ -9,6 +9,9 @@ export class InputDialogService {
 
   constructor(public alertCtrl: AlertController, public groceryService: GroceriesServiceService) { }
 
+  //Creates a prompt that will show edit item or add item based on the default parameter that is passed through.
+  //will show a blank form if add is selected.
+  //will show a prefilled item that can be editted.
   async showPrompt(item?, index?) {
     const prompt = await this.alertCtrl.create({
       header: item ? "Edit Item" : "Add Item",
@@ -33,9 +36,11 @@ export class InputDialogService {
           }
         },
         {
-          text: 'Save',
+          text: item ? 'Save' : 'Add',
           handler: (item) => {
             console.log('Item added', item);
+
+            //Will update if exists.  Will add if not exist.  
             if (index !== undefined){
               this.groceryService.editItem(item, index);
             }

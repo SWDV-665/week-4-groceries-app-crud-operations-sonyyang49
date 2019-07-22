@@ -10,14 +10,17 @@ import { InputDialogService } from '../../providers/input-dialog.service';
 })
 export class Tab3Page {
 
+  //This is the title of the page.
   title = "Grocery"
 
-  constructor(public toastCtrl: ToastController, public groceryService: GroceriesServiceService, public dataInput : InputDialogService) {}
+  constructor(public toastCtrl: ToastController, public dataService: GroceriesServiceService, public dataInput : InputDialogService) {}
 
+  //Returns the grocery items from the injectable service.
   getItems(){
-    return this.groceryService.getItems();
+    return this.dataService.getItems();
   }
 
+  //Removes the item with specified index from items array in the injectable service.
   async removeItem(item, index) {
     const toast = await this.toastCtrl.create({
       message: 'Item ' + index + ' has been deleted.',
@@ -25,9 +28,10 @@ export class Tab3Page {
     });
     toast.present();
 
-    this.groceryService.removeItem(item, index);
+    this.dataService.removeItem(item, index);
   }
 
+  //Updates the item with specified index from items array in the injectable service.
   async editItem(item, index) {
     const toast = await this.toastCtrl.create({
       message: 'Item ' + index + ' has been edited.',
@@ -37,6 +41,7 @@ export class Tab3Page {
     this.dataInput.showPrompt(item, index);
   }
 
+  //Creates a new item at the end of the items array in the injectable service.
   addItem() {
     this.dataInput.showPrompt();
   }
